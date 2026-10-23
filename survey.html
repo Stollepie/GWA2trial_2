@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Build your ideal evening</title>
+<style>
+:root{color-scheme:light;--ink:#29354a;--muted:#687386;--line:#e0e5ed;--paper:#fafbfd;--card:#fff;--blue:#e1ecfc;--rose:#f7e4ec;--mint:#e1efe5;--purple:#ebe3f8;--peach:#fae7d8;--yellow:#f8f0d6;--aqua:#dff0ef;--grey:#edf0f5}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{max-width:990px;margin:auto;padding:42px 24px 30px}.eyebrow{font-size:11px;font-weight:600;letter-spacing:2px;color:var(--muted)}h1{font-size:clamp(29px,5vw,42px);line-height:1.15;letter-spacing:-1.4px;font-weight:600;margin:12px 0}h2{font-size:19px;letter-spacing:-.4px;font-weight:600;margin:0}p{margin:8px 0}.intro{max-width:650px;color:var(--muted)}.layout{display:grid;grid-template-columns:310px minmax(0,1fr);gap:30px;margin-top:32px}.heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:14px}.small{font-size:13px;color:var(--muted)}button,textarea{font:inherit}button{cursor:pointer;color:var(--ink)}button:focus-visible,textarea:focus-visible{outline:3px solid #6380b9;outline-offset:3px}.menu{display:grid;grid-template-columns:1fr 1fr;gap:10px}.activity{border:1px solid #e2e6ec;background:var(--card);border-radius:18px;padding:16px 10px;min-height:100px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;font-size:14px}.activity .icon{font-size:26px;line-height:1;padding:10px;background:var(--tone);border-radius:14px}.activity-label{min-width:0;overflow-wrap:anywhere}.activity:hover{background:var(--tone)}button:disabled{cursor:default;opacity:.45}.plan{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:22px}.track{height:8px;display:flex;gap:5px;margin:15px 0 20px}.segment{flex:1;background:var(--grey);border-radius:4px}.slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.slot{position:relative;min-width:0;background:var(--tone,var(--paper));border:1px solid var(--line);border-radius:16px;overflow:hidden}.slot.active{outline:2px solid #6380b9;outline-offset:2px}.slot.drop{outline:3px solid #6380b9}.slot-main{width:100%;border:0;background:transparent;padding:12px 8px 14px;min-height:136px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px}.slot .number{font-size:11px;color:#59677c}.slot .emoji{font-size:27px;line-height:1.2}.slot .name{font-size:13px;min-height:20px}.remove{position:absolute;right:2px;top:18px;border:0;background:transparent;width:32px;height:40px;font-size:20px}.status{min-height:42px;font-size:13px;color:var(--muted);margin:14px 0 0}.controls{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:10px;flex-wrap:wrap}.primary,.secondary{border:0;border-radius:24px;padding:12px 18px;min-height:46px;font-size:14px}.primary{background:var(--ink);color:#fff}.secondary{background:var(--grey)}.situation{margin-top:18px;padding:20px;background:var(--purple);border-radius:20px}.situation h2{font-size:15px}.situation .prompt{font-size:21px;letter-spacing:-.5px;margin:8px 0}.situation .tip{font-size:14px;color:#4e5870}.comparison{font-size:13px;color:var(--muted);margin-top:18px}.comparison strong{font-weight:500;color:var(--ink)}.reflection{display:block;font-size:14px;margin-top:16px}textarea{display:block;resize:vertical;width:100%;min-height:78px;border:1px solid #c8bedc;border-radius:12px;background:#ffffffb3;padding:10px;margin-top:7px;color:var(--ink);font-size:16px}.foot{margin-top:22px;font-size:12px;color:var(--muted)}[hidden]{display:none!important}
+@media(max-width:760px){main{padding:26px 16px}.layout{grid-template-columns:1fr;gap:24px}.menu{grid-template-columns:repeat(4,minmax(0,1fr))}.activity{padding:12px 4px;font-size:12px;min-height:100px}.activity .icon{font-size:24px;padding:8px}.plan{padding:18px}.layout{margin-top:24px}}
+@media(max-width:400px){.menu{grid-template-columns:repeat(2,minmax(0,1fr))}.activity{min-height:88px;flex-direction:row;font-size:14px}.activity .icon{font-size:22px}.slots{grid-template-columns:repeat(2,minmax(0,1fr))}.slot-main{min-height:128px}.heading{flex-wrap:wrap}}
+@media(prefers-reduced-motion:no-preference){.activity,.slot{transition:background .15s}}
+
+button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.mobile-add{display:none}
+#activity-picker{width:min(600px,calc(100% - 24px));max-height:calc(100dvh - 32px);padding:0;border:1px solid var(--line);border-radius:24px;background:var(--paper);color:var(--ink);overflow:auto;overscroll-behavior:contain}
+#activity-picker::backdrop{background:#202a4066;backdrop-filter:blur(4px)}
+body:has(#activity-picker[open]){overflow:hidden}
+.picker-head{position:sticky;top:0;z-index:1;background:var(--paper);display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 18px 10px}
+.picker-head p{margin:4px 0}.picker-close{width:48px;height:48px;flex-shrink:0;border:0;border-radius:50%;background:var(--grey);font-size:26px}.picker-menu{padding:8px 18px 20px;grid-template-columns:repeat(3,minmax(0,1fr))}.picker-menu .activity{min-height:104px;font-size:14px;padding:12px 6px}.picker-menu .activity .icon{font-size:26px;padding:8px}
+@media(max-width:760px){
+main{padding:24px max(12px,env(safe-area-inset-right)) calc(24px + env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left))}
+h1{font-size:30px;letter-spacing:-1px}.intro{font-size:14px;line-height:1.55}.eyebrow{font-size:11px}.layout{display:block;margin-top:20px}.desktop-menu,.desktop-hint{display:none}.plan{border-radius:20px;padding:16px}.heading{margin-bottom:10px;flex-wrap:wrap}.heading h2{font-size:18px}#time-total{font-size:13px;font-variant-numeric:tabular-nums}.track{margin:12px 0 16px}.slots{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.slot{border-radius:14px;display:flex;flex-direction:column}.slot-main{min-height:126px;padding:10px 5px;gap:6px;flex:1}.slot .number{font-size:11px}.slot .emoji{font-size:26px}.slot .name{font-size:12px;line-height:1.35;overflow-wrap:anywhere;min-height:33px;display:flex;align-items:center;justify-content:center}.remove{position:static;width:100%;height:44px;min-height:44px;font-size:12px;border-top:1px solid #29354a14;background:#ffffff44}.mobile-add{display:block;width:100%;margin-top:14px;font-size:15px;min-height:48px}.mobile-add:disabled{display:none}.status{font-size:14px;line-height:1.5;min-height:0;margin:12px 0}.controls{display:grid;grid-template-columns:1fr;gap:8px;margin-top:14px}.controls .primary{grid-row:1;min-height:48px;font-size:15px}.controls .secondary{min-height:44px;font-size:14px;background:transparent}.situation{padding:18px;margin-top:16px}.situation .prompt{font-size:22px;line-height:1.35}.situation .tip{font-size:15px}.reflection{font-size:15px}textarea{min-height:104px;font-size:16px}.comparison{font-size:13px;line-height:1.7}.foot{font-size:13px;margin-top:16px}
+#activity-picker{position:fixed;inset:auto 0 0;margin:0 auto;width:100%;max-width:600px;max-height:90dvh;border:0;border-radius:24px 24px 0 0;padding-bottom:env(safe-area-inset-bottom)}.picker-menu{gap:8px;padding:8px 14px 20px}.picker-menu .activity{flex-direction:column;min-height:106px;font-size:13px;padding:10px 5px}.picker-menu .activity-label{line-height:1.35}.picker-head{padding:16px 16px 10px}.picker-head h2{font-size:18px}
+}
+@media(max-width:340px){.plan{padding:12px}.slots{gap:6px}.slot-main{padding:9px 4px}.slot .number{font-size:10px}.picker-menu{gap:6px;padding-left:10px;padding-right:10px}}
+
+</style>
+</head>
+<body>
+<main>
+<header><div class="eyebrow">THREE HOURS · YOUR CHOICE</div><h1>Build your ideal evening</h1><p class="intro">You have six time tokens. Each token is 30 minutes.<br>Tap an activity to add it to your evening. You can choose it more than once.</p></header>
+<div class="layout">
+<section class="desktop-menu" aria-labelledby="menu-title"><div class="heading"><h2 id="menu-title">Activity menu</h2><span class="small">Tap to add</span></div><div class="menu" id="menu"></div></section>
+<section aria-labelledby="plan-title"><div class="plan"><div class="heading"><h2 id="plan-title">Your evening</h2><span class="small" id="time-total">0 / 3 hours</span></div><div class="track" id="track" aria-hidden="true"></div><div class="slots" id="slots"></div><button class="primary mobile-add" id="mobile-add" type="button">＋ Add an activity</button><p class="status" id="status" aria-live="polite"></p><div class="controls"><button class="secondary" id="restart" type="button">Start again</button><button class="primary" id="challenge" type="button" disabled>My evening is ready</button></div><div class="comparison" id="comparison" hidden></div></div>
+<div class="situation" id="situation" hidden><h2>A change of plans…</h2><p class="prompt" id="scenario"></p><p class="tip">Would you keep your plan or change it? Tap a time slot, then choose an activity.</p><label class="reflection" for="reason">Explain your choice.<textarea id="reason" placeholder="I would … because …"></textarea></label></div>
+</section>
+</div><p class="foot">Each slot is 30 minutes. Tap a slot to replace it, or × to remove it. <span class="desktop-hint">On a computer, you can also drag an activity into a slot.</span></p>
+</main>
+<dialog id="activity-picker" aria-labelledby="picker-title">
+<div class="picker-head"><div><h2 id="picker-title">Choose an activity</h2><p class="small">One choice = 30 minutes</p></div><button class="picker-close" id="picker-close" type="button" aria-label="Close activity menu">×</button></div>
+<div class="picker-menu menu" id="picker-menu"></div>
+</dialog>
+<script id="planner-model">
+const ACTIVITIES=[{id:'gaming',name:'Gaming',emoji:'🎮',color:'var(--rose)'},{id:'drawing',name:'Drawing',emoji:'🎨',color:'var(--mint)'},{id:'scrolling',name:'Scrolling',emoji:'📱',color:'var(--purple)'},{id:'sport',name:'Sport',emoji:'⚽',color:'var(--blue)'},{id:'friends',name:'Friends',emoji:'🧑‍🤝‍🧑',color:'var(--peach)'},{id:'reading',name:'Reading',emoji:'📖',color:'var(--yellow)'},{id:'music',name:'Music',emoji:'🎵',color:'var(--aqua)'},{id:'nothing',name:'Doing nothing',emoji:'🛋️',color:'var(--grey)'},{id:'movies',name:'Watching movies',emoji:'🎬',color:'var(--blue)'},{id:'ai',name:'Chatting to AI',emoji:'🤖',color:'var(--purple)'},{id:'learning',name:'Learning something new',emoji:'💡',color:'var(--yellow)'}];
+const SITUATIONS=['You’ve had a stressful day.','You’ve spent the whole day alone.','You have very little energy.'];
+class EveningPlanner{constructor(){this.reset()}reset(){this.slots=Array(6).fill(null);this.selected=null;this.original=null;this.round=-1}get filled(){return this.slots.filter(Boolean).length}select(index){if(Number.isInteger(index)&&index>=0&&index<6)this.selected=index}place(id,index=this.selected){if(!ACTIVITIES.some(a=>a.id===id))return false;const target=index===null?this.slots.indexOf(null):index;if(!Number.isInteger(target)||target<0||target>=6)return false;this.slots[target]=id;this.selected=null;return true}remove(index){if(Number.isInteger(index)&&index>=0&&index<6){this.slots[index]=null;this.selected=null}}challenge(){if(this.filled!==6||this.round>=SITUATIONS.length-1)return false;if(!this.original)this.original=this.slots.slice();this.round++;this.selected=null;return true}get changed(){return this.original?this.slots.filter((id,i)=>id!==this.original[i]).length:0}}
+</script>
+<script>
+(function(){
+const planner=new EveningPlanner();
+const $=id=>document.getElementById(id);
+const slots=$('slots'),track=$('track'),picker=$('activity-picker');
+const phone=window.matchMedia('(max-width:760px)');
+const activity=id=>ACTIVITIES.find(a=>a.id===id);
+let returnSlot=null;
+function openPicker(index){
+ planner.select(index);returnSlot=index;render();
+ $('picker-title').textContent='Activity for slot '+(index+1);
+ picker.showModal();
+}
+function render(){
+ const focus=document.activeElement;
+ const focusId=focus&&focus.dataset?focus.dataset.focus:null;
+ slots.replaceChildren();track.replaceChildren();
+ planner.slots.forEach((id,index)=>{
+  const item=activity(id),segment=document.createElement('div');
+  segment.className='segment';if(item)segment.style.background=item.color;track.append(segment);
+  const box=document.createElement('div');box.className='slot'+(planner.selected===index?' active':'');
+  if(item)box.style.setProperty('--tone',item.color);
+  const button=document.createElement('button');button.type='button';button.className='slot-main';button.dataset.focus='slot-'+index;
+  button.setAttribute('aria-pressed',String(planner.selected===index));
+  button.setAttribute('aria-label','Slot '+(index+1)+', 30 minutes: '+(item?item.name:'empty')+'. Choose an activity to place here.');
+  if(phone.matches){button.setAttribute('aria-haspopup','dialog');button.setAttribute('aria-controls','activity-picker');}
+  const number=document.createElement('span');number.className='number';number.textContent=(index+1)+' · 30 MIN';
+  const emoji=document.createElement('span');emoji.className='emoji';emoji.textContent=item?item.emoji:'＋';emoji.setAttribute('aria-hidden','true');
+  const name=document.createElement('span');name.className='name';name.textContent=item?item.name:'Choose activity';
+  button.append(number,emoji,name);
+  button.onclick=()=>{if(phone.matches)openPicker(index);else{planner.select(index);render();}};
+  box.append(button);
+  if(item){
+   const remove=document.createElement('button');remove.className='remove';remove.type='button';remove.textContent=phone.matches?'Remove':'×';remove.dataset.focus='remove-'+index;
+   remove.setAttribute('aria-label','Remove '+item.name+' from slot '+(index+1));
+   remove.onclick=()=>{planner.remove(index);render();slots.querySelector('[data-focus="slot-'+index+'"]').focus();};box.append(remove);
+  }
+  box.ondragover=e=>{e.preventDefault();box.classList.add('drop');};box.ondragleave=()=>box.classList.remove('drop');
+  box.ondrop=e=>{e.preventDefault();box.classList.remove('drop');if(planner.place(e.dataTransfer.getData('text/plain'),index))render();};slots.append(box);
+ });
+ const mins=planner.filled*30;
+ $('time-total').textContent=(mins===0?'0 min':mins%60===0?(mins/60)+' h':Math.floor(mins/60)+' h 30 min')+' / 3 h';
+ $('status').textContent=planner.selected!==null?'Choose an activity for slot '+(planner.selected+1)+'.':planner.filled===6?'Your evening is full. Tap a slot to change its activity.':(6-planner.filled)+' time token'+(6-planner.filled===1?'':'s')+' left · 30 minutes each.';
+ $('menu').querySelectorAll('button').forEach(b=>b.disabled=planner.filled===6&&planner.selected===null);
+ $('mobile-add').disabled=planner.filled===6;
+ $('challenge').disabled=planner.filled!==6||planner.round===2;
+ $('challenge').textContent=planner.round<0?'My evening is ready':planner.round===2?'All situations explored':'Try another situation';
+ $('situation').hidden=planner.round<0;
+ if(planner.round>=0)$('scenario').textContent=SITUATIONS[planner.round];
+ $('comparison').hidden=!planner.original;
+ if(planner.original){const counts=ACTIVITIES.map(a=>{const n=planner.original.filter(id=>id===a.id).length;return n?a.name+' '+n*30+' min':null}).filter(Boolean);$('comparison').textContent='Your first plan: '+counts.join(' · ')+'. Changed: '+planner.changed+' of 6 slots.';}
+ if(focusId){const replacement=Array.from(slots.querySelectorAll('[data-focus]')).find(b=>b.dataset.focus===focusId);if(replacement)replacement.focus({preventScroll:true});}
+}
+function createActivityButton(item,inPicker){
+ const button=document.createElement('button');button.type='button';button.className='activity';button.style.setProperty('--tone',item.color);button.draggable=!inPicker;
+ button.setAttribute('aria-label','Choose 30 minutes of '+item.name);
+ const icon=document.createElement('span');icon.className='icon';icon.textContent=item.emoji;icon.setAttribute('aria-hidden','true');
+ const label=document.createElement('span');label.className='activity-label';label.textContent=item.name;button.append(icon,label);
+ button.onclick=()=>{if(planner.place(item.id)){render();if(inPicker)picker.close();}};
+ if(!inPicker)button.ondragstart=e=>{e.dataTransfer.setData('text/plain',item.id);e.dataTransfer.effectAllowed='copy';};return button;
+}
+ACTIVITIES.forEach(item=>{$('menu').append(createActivityButton(item,false));$('picker-menu').append(createActivityButton(item,true));});
+$('mobile-add').onclick=()=>{const index=planner.slots.indexOf(null);if(index!==-1)openPicker(index);};
+$('picker-close').onclick=()=>picker.close();
+picker.addEventListener('close',()=>{planner.selected=null;render();if(returnSlot!==null){const button=slots.querySelector('[data-focus="slot-'+returnSlot+'"]');if(button)button.focus({preventScroll:true});returnSlot=null;}});
+picker.addEventListener('click',event=>{if(event.target!==picker)return;const r=picker.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)picker.close();});
+$('challenge').onclick=()=>{if(planner.challenge()){$('reason').value='';render();$('situation').scrollIntoView({block:'nearest',behavior:window.matchMedia('(prefers-reduced-motion:reduce)').matches?'instant':'smooth'});}};
+$('restart').onclick=()=>{planner.reset();$('reason').value='';render();};
+phone.addEventListener('change',()=>{if(picker.open)picker.close();render();});
+render();
+})();
+</script>
+</body></html>
